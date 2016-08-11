@@ -12,8 +12,8 @@
 
 //**********************
 //**********************
-int *makeApin();
-int *getPinGuess();
+char makeApin();
+int getPinGuess();
 void part1(void);
 char getUsername(char userName);
 int getNumberFromUser();
@@ -58,16 +58,20 @@ int main(int argc, const char * argv[]) {
 //**********************************
 //**********************************
 
-int *getPinGuess() {
-    int pin[4];
+int getPinGuess() {
+    int pin[4] = {-1, -1, -1, -1};
     int numberOfItemsScanned = 0;
-    while (numberOfItemsScanned != 1) {
-        printf("Please a four digit pin: ");
+    while (numberOfItemsScanned != 4) {
+        printf("Please enter a four digit pin like this 0123: ");
         fpurge(stdin);
-        numberOfItemsScanned = scanf("%d", pin);
+        numberOfItemsScanned = scanf("%1d%1d%1d%1d", &pin[0],&pin[1],&pin[2],&pin[3]);
+        fpurge(stdin);
     }
     // Prints to the screen to make sure that the number was captured correctly.
-    printf("%d%d%d%d\n",pin[0],pin[1],pin[2],pin[3]);
+    for (int i = 0; i < 4; i++) {
+        printf("pin[%d]%d\n", i, pin[i]);
+    }
+    
     
     return 0;
     
@@ -78,15 +82,18 @@ int *getPinGuess() {
 //**********************************
 //**********************************
 
-int *makeApin() {
-    int pinNumber[4] = {'\0'};
+char makeApin() {
+    //*************************
+    int pinNumber[4] = {arc4random_uniform(4),arc4random_uniform(4),arc4random_uniform(4),arc4random_uniform(4)};
+    fpurge(stdin);
+    printf("%1d%1d%1d%1d\n", pinNumber[0],pinNumber[1],pinNumber[2],pinNumber[3]);
+    fpurge(stdin);
     
-    //***Generate Random Pin***
-    pinNumber[3] = arc4random_uniform(3),arc4random_uniform(3),arc4random_uniform(3),arc4random_uniform(3);
-    printf("\n %D", *pinNumber);
+    for (int i = 0; i < 4; i++) {
+        printf("pin[%d]%d\n", i, pinNumber[i]);
+    }
+    return *pinNumber;
     
-    
-    return 0;
 };
 
 
